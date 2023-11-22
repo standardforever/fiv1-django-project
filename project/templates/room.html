@@ -10,12 +10,12 @@
     <div id="message-container">
         <!-- Messages will be displayed here -->
     </div>
-
+    
     <script>
         const messageContainer = document.getElementById('message-container');
 
         // Define the WebSocket URL to connect to the "raspberry_pi"
-        const wsUrl = 'ws://' + window.location.host + '/ws/' + 'raspberry_pi' + '/'
+        const wsUrl = 'ws://127.0.0.1:8000/ws/raspberry_pi/'
 
         // Create a WebSocket connection
         const socket = new WebSocket(wsUrl);

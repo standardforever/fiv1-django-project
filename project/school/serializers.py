@@ -10,12 +10,11 @@ from django.core.validators import MinLengthValidator, MaxLengthValidator
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'password', 'last_name', 'first_name',
+        fields = ['username', 'password', 'first_name',
                   'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
         extra_kwargs = {
             'username': {'required': True},
             'password': {'required': True},
-            'last_name': {'required': True},
             'first_name': {'required': True},
 
         }
@@ -25,7 +24,6 @@ class UserSerializer(serializers.ModelSerializer):
         try:
             user = User(
                 username=validated_data['username'],
-                last_name=validated_data['last_name'],
                 first_name=validated_data['first_name']
             )
             user.set_password(validated_data['password'])

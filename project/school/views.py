@@ -26,7 +26,14 @@ def register_user(request):
         serializer.save()
         new_user = {"first_name": serializer.data.get('first_name'), 'last_name': serializer.data.get('last_name'), "email": serializer.data.get('username')} 
 
+
     if request.method == 'POST':
+        try:
+            User.objects.get(first_name=request.data.get('first_name'))
+            return Response({'error': 'User with these Name Already Exits'}, status=status.HTTP_400_BAD_REQUEST)
+        except ObjectDoesNotExist:
+            pass
+
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -93,8 +100,8 @@ def order_history(request):
         word = request.data.get('word')
 
         history['word'] = word
-        history['user']= user.id
-        history['user_name'] = user.email
+        history['user']= request.user.id
+        history['user_name'] = request.user.username
         
         serializer = HistorySerializer(data=history)
         if not serializer.is_valid():
